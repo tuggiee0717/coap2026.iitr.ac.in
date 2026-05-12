@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Common Offer Acceptance Portal 2026</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; font-size: 14px; background: #fff; color: #222; }
+
+  /* ── HOME PAGE ── */
+  #home-page { display: block; }
+  #login-page { display: none; }
+  #dashboard-page { display: none; }
+
+  .header { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; border-bottom: 1px solid #ccc; }
+  .header-center { text-align: center; }
+  .header-center h1 { font-size: 30px; font-weight: bold; color: #1a1a6e; }
+  .header-center h2 { font-size: 30px; font-weight: bold; color: #1a1a6e; }
+  .header-center h3 { font-size: 30px; font-weight: bold; color: #1a1a6e; }
+  .header img { height: 100px; width: 100px; }
+  .coap-logo { width: 100px; height: 100px; }
+  .iitr-logo { width: 100px; height: 100px; }
+
+  .navbar { background: #2c2c2c; display: flex; justify-content: center; gap: 0; }
+  .navbar a { color: #fff; text-decoration: none; padding: 10px 18px; font-size: 13px; display: inline-block; border-right: 1px solid #555; }
+  .navbar a:first-child { border-left: 1px solid #555; }
+  .navbar a:hover { background: #555; }
+
+  .btn-row { display: flex; gap: 10px; padding: 20px; background: #e8eaf0; justify-content: center; }
+  .portal-btn { display: flex; align-items: center; justify-content: space-between; background: #c8c8c8; border: 1px solid #aaa; padding: 14px 30px; width: 320px; font-size: 16px; font-weight: bold; cursor: pointer; text-decoration: none; color: #222; }
+  .portal-btn:hover { background: #b8b8b8; }
+  .portal-btn .arrow { font-size: 18px; border: 1px solid #666; padding: 2px 8px; }
+  .live-banner { text-align: center; color: red; font-weight: bold; font-size: 22px; padding: 6px; }
+
+  .content { padding: 20px 200px; }
+  .updates-box { border: 1px solid #ccc; padding: 15px 20px; margin-bottom: 20px; }
+  .updates-box h3 { font-size: 26px; font-weight: bold; margin-bottom: 10px; }
+  .updates-box ul { padding-left: 20px; }
+  .updates-box ul li { margin-bottom: 5px; }
+
+  .intro-box { background: #e8eaf0; padding: 20px; }
+  .intro-box h3 { font-size: 26px; font-weight: bold; margin-bottom: 12px; }
+  .intro-box p { margin-bottom: 10px; line-height: 1.6; }
+  .intro-box .note { font-weight: bold; margin-top: 10px; }
+  .intro-box ol { font-size: 14px; padding-left: 20px; margin-top: 5px; line-height: 1.4; }
+  .intro-box ol li { margin-bottom: 4px; }
+
+  /* ── LOGIN PAGE ── */
+  #login-page { background: #4a6fa5; min-height: 100vh; display: none; align-items: flex-start; justify-content: center; padding: 60px 0; }
+  .login-box { background: #fff; width: 760px; border: 1px solid #aaa; }
+  .login-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 30px; border-bottom: 1px solid #ddd; }
+  .login-header-center { text-align: center; }
+  .login-header-center h2 { font-size: 22px; font-weight: bold; color: #1a1a6e; }
+  .login-header-center p { font-size: 14px; color: #333; }
+  .login-header-center .iitr-name { font-size: 14px; font-weight: bold; color: #0000cc; margin-top: 4px; }
+  .login-title-bar { background: #4a6fa5; color: #fff; text-align: center; font-size: 16px; font-weight: bold; padding: 8px; letter-spacing: 1px; }
+  .login-form-section { padding: 20px 30px; }
+  .applicant-login-title { font-size: 14px; font-weight: bold; color: #333; padding-bottom: 10px; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
+  .form-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 14px; }
+  .form-row label { font-size: 13px; width: 80px; text-align: right; color: #333; }
+  .form-row label .req { color: red; }
+  .form-row input { background: #fffacd; border: 1px solid #aaa; padding: 6px 10px; width: 230px; font-size: 13px; }
+  .form-hint { font-size: 12px; color: #333; margin-left: 90px; margin-bottom: 10px; }
+  .login-btn { display: block; margin: 20px auto 10px; background: #4a9fd4; color: #fff; border: none; padding: 8px 40px; font-size: 14px; cursor: pointer; border-radius: 3px; }
+  .login-btn:hover { background: #3a8fc4; }
+  .forgot-link { text-align: center; font-size: 13px; color: #0000cc; cursor: pointer; text-decoration: underline; }
+  .version-text { text-align: center; font-size: 12px; color: #666; margin-top: 8px; padding-bottom: 20px; }
+  .err-msg { color: red; font-size: 13px; text-align: center; margin-bottom: 8px; display: none; }
+
+  /* ── DASHBOARD PAGE ── */
+  #dashboard-page { display: none; }
+  .dash-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; border-bottom: 1px solid #ccc; background: #fff; }
+  .dash-header-center { text-align: center; }
+  .dash-header-center h2 { font-size: 24px; font-weight: bold; color: #1a1a6e; }
+  .dash-header-center p { font-size: 18px; color: #333; color: #1a1a6e; }
+  .dash-topbar { display: flex; justify-content: flex-end; gap: 8px; padding: 6px 20px; background: #f5f5f5; border-bottom: 1px solid #ddd; }
+  .dash-topbar button { background: #f0f0f0; border: 1px solid #aaa; padding: 4px 14px; font-size: 13px; cursor: pointer; }
+  .tab-bar { background: #2c5282; display: flex; }
+  .tab-bar .tab { color: #fff; padding: 8px 20px; font-size: 13px; cursor: pointer; border-right: 1px solid #4a7abf; }
+  .tab-bar .tab.active { background: #f0f0f0; color: #222; }
+  .dash-content { padding: 16px 20px; }
+
+  .round-banner { color: #cc0000; font-size: 14px; font-weight: bold; margin-bottom: 3px; margin-top: 12px; margin-left: 100px; margin-right: 100px; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px; margin-left: 100px; margin-right: 100px; font-size: 13px; }
+  .info-row { display: flex; gap: 20px; }
+  .info-label { font-weight: bold; min-width: 160px; }
+  .gate-link { color: #0000cc; font-size: 13px; cursor: pointer; text-decoration: underline; }
+
+  .accepted-notice { background: #fffbe6; border: 1px solid #e0d080; padding: 10px 16px; font-size: 13px; color: #555; margin-bottom: 14px; }
+
+  .instructions-box { border: 1px solid #ccc; padding: 15px 20px; background: #fcfad4; margin-bottom: 14px; margin-top: 14px; margin-left: 100px; margin-right: 100px; font-size: 13px; }
+  .instructions-box h4 { font-weight: bold; margin-bottom: 8px; }
+  .instructions-box .instr-item { display: flex; gap: 8px; margin-bottom: 8px; }
+  .instructions-box .instr-item .arrow-icon { color: #0000cc; font-size: 16px; flex-shrink: 0; }
+  .instructions-box ol { padding-left: 24px; }
+  .instructions-box ol li { margin-bottom: 4px; }
+
+  .read-checkbox-row { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; margin-left: 100px; font-size: 13px; color: #0000cc; font-weight: bold; }
+  .read-checkbox-row input { width: 16px; height: 16px; cursor: pointer; }
+
+  .offers-table-section { display: none; margin-top: 10px; margin-left: 100px; margin-right: 100px; }
+  .offers-table-section table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .offers-table-section th { background: #2c5282; color: #fff; padding: 8px 10px; text-align: left; border: 1px solid #4a7abf; }
+  .offers-table-section td { padding: 7px 10px; border: 1px solid #ccc; vertical-align: middle; }
+  .offers-table-section tr:nth-child(even) td { background: #f5f9ff; }
+  .offers-table-section tr.selected-row td { background: #ddeeff; }
+
+  .btn-accept-freeze { background: #2e8b57; color: #fff; border: none; padding: 5px 12px; font-size: 12px; cursor: pointer; border-radius: 2px; }
+  .btn-accept-freeze:hover { background: #1f6b3e; }
+  .no-offer-row td { font-size: 13px; color: #555; }
+  input[type=radio] { cursor: pointer; }
+
+  .dash-footer { font-size: 11px; color: #666; text-align: center; padding: 10px; border-top: 1px solid #ddd; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<div id="home-page">
+  <div class="header">
+    <img src="https://coap2026.iitr.ac.in/coap2026/iitr.jpg" class="iitr-logo" onerror="this.style.display='none'">
+    <div class="header-center">
+      <h1>Common Offer Acceptance Portal 2026</h1>
+      <h2>सामूहिक प्रस्ताव स्वीकृति पोर्टल 2026</h2>
+      <h3>Coordinating Institute: IIT Roorkee</h3>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <img src="https://coap2026.iitr.ac.in/coap2026/coap2026logo.png" alt="Trulli" width="75" height="333">
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <a href="#">Home</a>
+    <a href="#">Guidelines</a>
+    <a href="#">Information Brochure</a>
+    <a href="#">Registration Procedure</a>
+    <a href="#">Important Dates</a>
+    <a href="#">FAQs</a>
+    <a href="#">Contact Us</a>
+  </nav>
+
+  <div class="btn-row">
+    <a href="#" class="portal-btn" onclick="return false;">
+      REGISTER
+      <span class="arrow">→</span>
+    </a>
+    <a href="#" class="portal-btn" onclick="showLogin(); return false;">
+      LOGIN
+      <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <div class="live-banner">Round 1 offer is released. Decision making is live in the candidates portal.</div>
+
+  <div class="content">
+    <div class="updates-box">
+      <h3>Updates</h3>
+      <ul>
+        <li>The COAP basic website has been launched.</li>
+        <li>COAP activities will commence after the GATE 2026 results are announced.</li>
+      </ul>
+    </div>
+
+    <div class="intro-box">
+      <h3>Introduction</h3>
+      <p>The Common Offer Acceptance Portal (COAP) was initiated in 2017 to provide a common platform for registered candidates seeking admission to make their preferred choice for M.Tech. admission. Programme in participating Institutes, or a job offer from participating Public Sector Undertakings (PSUs). While eight institutes (IIT Bombay, IIT Bhubaneswar, IIT Delhi, IIT Guwahati, IIT Indore, IIT Kharagpur, IIT Madras, IIT Roorkee) were involved in COAP 2017, over the years, twenty-four institutes and a PSU (NPCIL) have come together to participate in COAP to fill their M.Tech. seats or job vacancies. Every year, the GATE organizing institute of the preceding year acts as the coordinating institute for COAP.</p>
+      <p>IIT Roorkee is the coordinating institute for COAP 2026. The participating institutes are: IISc Bengaluru, IIT Bhilai, IIT Bhubaneswar, IIT BHU, IIT Bombay, IIT Delhi, IIT Dharwad, IIT Gandhinagar, IIT Goa, IIT Guwahati, IIT Hyderabad, IIT Indore, IIT (ISM) Dhanbad, IIT Jammu, IIT Jodhpur, IIT Kanpur, IIT Kharagpur, IIT Madras, IIT Mandi, IIT Palakkad, IIT Patna, IIT Roorkee, IIT Ropar and IIT Tirupati.</p>
+      <p class="note">Note:</p>
+      <ol>
+        <li>COAP 2026 is a portal for M.Tech. admission offer and acceptance/ rejection by participating institutes and candidates, respectively.</li>
+        <li>The candidate should apply separately to the respective Institute(s) for M.Tech. admission.</li>
+        <li>Each participating institute will adhere to its respective selection procedures in accordance with its established norms and guidelines.</li>
+        <li>Each candidate must register at COAP to review and select their most preferred offer, if any, from the participating institutes.</li>
+        </ol>
+      <p class="note">Eligibility Criteria:</p>
+      <ol>
+        <li>Candidates must be Indian Nationals.</li>
+        <li>Candidate should have a valid GATE score (Qualified in GATE 2026/ GATE 2025/ GATE 2024)</li>
+      </ol>
+    </div>
+     <div  style="margin-top: 30px; margin-bottom: 30px; line-height: 1.9;" class="updates">
+      <h2 style="font-size: 28px; margin-bottom: 15px;">Salient Feature</h2>
+      <ul style="padding-left: 28px; margin-top: 15px;">
+        <li>COAP refers to the Common Offer Acceptance Portal, on which all Participating Institutes/ PSUs will upload their offers during the specified common time window.</li>
+<li>The registered candidates can access admission/ job offers by registering on COAP 2026 from all participating institutes/ PSUs where they have applied for M.Tech. admissions/ jobs.</li>
+<li>For admission into M.Tech. program at any of the participating institutes or applying for a job in any participating PSU, every candidate should also apply to the corresponding Institute/ PSU.</li>
+<li>To understand the mechanism of looking at all the available offers and making a specific choice out of the offers, the candidates are advised to read the guidelines and then register at COAP 2026.</li>
+<li>COAP 2026 is not an Application Portal for M.Tech. admission in any participating institute. Candidates should apply separately to the respective Institute(s) for M.Tech. admission/ PSU for the job.</li>
+<li>Each participating Institute/ PSU will follow the selection procedure as per the norms and guidelines of the respective Institute.</li>
+<li>To access and make a decision on the most preferred choice out of the offers (if any) made by participating Institute(s), each candidate should register at COAP 2026.</li>
+<li>COAP registration is completely free. Note that providing the COAP registration number has been made mandatory by the participating institutes in their M.Tech. application portals.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ LOGIN PAGE ═══════════════ -->
+<div id="login-page" style="background:#4a6fa5; min-height:100vh; display:none; align-items:flex-start; justify-content:center; padding:60px 0;">
+  <div class="login-box">
+    <div class="login-header">
+      <img src="https://coap2026.iitr.ac.in/coap2026/coap2026logo.png" alt="Trulli" width="75" height="75">
+      <div class="login-header-center">
+        <h2>COAP 2026</h2>
+        <p style="color:#1a1a6e;">Common Offer Acceptance Portal</p>
+        <p style="color:#1a1a6e;">Coordinating Institute: IIT Roorkee</p>
+      </div>
+      <div style="text-align:center;">
+         <img src="https://coap2026.iitr.ac.in/coap2026/iitr.jpg" class="iitr-logo" onerror="this.style.display='none'">
+        <div class="login-header-center iitr-name">IIT Roorkee</div>
+      </div>
+    </div>
+
+    <div class="login-title-bar">LOGIN</div>
+
+    <div class="login-form-section">
+      <div class="applicant-login-title">Applicant's Login</div>
+      <div class="err-msg" id="err-msg">Invalid credentials. Please try again.</div>
+
+      <div class="form-row">
+        <label><span class="req">*</span> User Id</label>
+        <input type="text" id="uid" placeholder="">
+      </div>
+      <div class="form-hint">Enter GATE Registration Number without Paper Code.</div>
+      <div class="form-row">
+        <label><span class="req">*</span> Password</label>
+        <input type="password" id="upwd" placeholder="">
+      </div>
+
+      <button class="login-btn" onclick="doLogin()">Login</button>
+      <div class="forgot-link">Forgot Password? Change Password</div>
+      <div class="version-text">Version 15.03.01</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ DASHBOARD PAGE ═══════════════ -->
+<div id="dashboard-page">
+  <div class="dash-header">
+    <img src="https://coap2026.iitr.ac.in/coap2026/coap2026logo.png" alt="Trulli" width="75" height="75">
+    <div class="dash-header-center">
+      <h2>COAP 2026</h2>
+      <p>Common Offer Acceptance Portal</p>
+      <p>Organizing Institute: IIT Roorkee (IITR)</p>
+    </div>
+    <img src="https://coap2026.iitr.ac.in/coap2026/iitr.jpg" width="65" height="65" onerror="this.style.display='none'">
+  </div>
+
+  <div class="dash-topbar">
+    <button onclick="doPrint()">🖨 Print</button>
+    <button onclick="doLogout()">Logout</button>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab active">Application Form</div>
+  </div>
+
+  <div class="dash-content">
+    <div class="round-banner">Round 1: The deadline for acceptance of an offer is 12 Jun 2026 - 09:00:00 hrs</div>
+
+    <div class="intro-box" style="font-size:13px; margin-bottom:30px; margin-top:30px; margin-left:100px; margin-right:100px; line-height: 1.8;">
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <div><span style="font-weight:bold;">COAP Registration No:</span> COAP26010063</div>
+        <div style="margin-left:auto;"><span style="font-weight:bold;">Date of Birth:</span> 17/Jul/2002</div>
+      </div>
+      <div style="display:flex; gap:30px; flex-wrap:wrap; margin-top:5px;">
+        <div><span style="font-weight:bold;">Applicant's Name:</span> RASHI MANGAL</div>
+        <div style="margin-left:auto;"><span style="font-weight:bold;">Mobile No:</span> 7976388290</div>
+      </div>
+      <div style="margin-top:5px;"><span style="font-weight:bold;">Email-Id:</span> rashimangal17@gmail.com</div>
+      <div style="margin-top:5px;"><span style="font-weight:bold;">GATE Registration Details:</span> <span class="gate-link">Show details</span></div>
+    </div>
+
+    <div class="instructions-box">
+      <h4>Instructions:</h4>
+      <div class="instr-item">
+        <span class="arrow-icon">&#9658;</span>
+        <div>Select one of the offers shown in the Table below and use one of the following two decision buttons that get displayed against selected offer:
+          <ol>
+            <li><strong>"Accept and Freeze"</strong> – This is my final selection. I am exiting the allotment process in subsequent rounds.</li>
+            <li><strong>"Retain and Wait"</strong> – This is my decision in this round. I am rejecting all other offers that I have not selected in this round.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="instr-item">
+        <span class="arrow-icon">&#9658;</span>
+        <div>If you do not select any of the offers in this round, it means that you reject all the offers in this round but wish to be considered in subsequent rounds for your higher choices. Before clicking on <strong>"Submit"</strong> button, you must select <strong>"Reject and Wait"</strong> button.</div>
+      </div>
+      <div class="instr-item">
+        <span class="arrow-icon">&#9658;</span>
+        <div>You should note:
+          <ol>
+            <li>Only the offer you had selected in this round (using Retain &amp; Wait) will be available to you in subsequent rounds with upgrade, if any.</li>
+            <li>All other offers you had not selected in this round will not be available in subsequent rounds.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="read-checkbox-row">
+      <input type="checkbox" id="read-check" onchange="toggleOffersTable()">
+      <label for="read-check">I have read and understood the instructions.</label>
+    </div>
+
+    <div class="offers-table-section" id="offers-table">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:50px;">Selection</th>
+            <th>GATE Registration Number</th>
+            <th>GATE Score</th>
+            <th>Program</th>
+            <th>Institute/PSU</th>
+            <th>Decision</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="offer-row" onclick="selectOffer(this)">
+            <td style="text-align:center;"><input type="radio" name="offer" value="1" id="offer-radio" onchange="showDecisionBtn(this)"></td>
+            <td>AR26S83021250</td>
+            <td>410</td>
+            <td>Architecture and Planning</td>
+            <td>IIT Roorkee</td>
+            <td class="decision-cell"></td>
+          </tr>
+          <tr id="offer-row" onclick="selectOffer(this)">
+            <td style="text-align:center;"><input type="radio" name="offer" value="1" id="offer-radio" onchange="showDecisionBtn(this)"></td>
+            <td>AR26S83021250</td>
+            <td>410</td>
+            <td>Architecture and Planning</td>
+            <td>IIT BHU</td>
+           <td class="decision-cell"></td>
+          </tr>
+          <tr class="no-offer-row">
+  <td colspan="6">
+
+    <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+      <input type="radio"
+             name="offer"
+             value="0"
+             onchange="showSubmitButton()">
+
+      I do not want to select any of the offers in this round.
+      I wish to be considered for subsequent rounds.
+    </label>
+
+    <div id="submit-area" style="margin-top:12px;">
+    </div>
+
+  </td>
+</tr>
+        </tbody>
+      </table>
+      <div style="margin-top:12px; text-align:center; font-size:11px; color:#666;">Version 15.02.01</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showLogin() {
+    document.getElementById('home-page').style.display = 'none';
+    var lp = document.getElementById('login-page');
+    lp.style.display = 'flex';
+  }
+
+  function doLogin() {
+    var uid = document.getElementById('uid').value.trim();
+    var pwd = document.getElementById('upwd').value.trim();
+    document.getElementById('login-page').style.display = 'none';
+    document.getElementById('dashboard-page').style.display = 'block';
+  }
+
+  function doLogout() {
+    document.getElementById('dashboard-page').style.display = 'none';
+    document.getElementById('home-page').style.display = 'block';
+    document.getElementById('read-check').checked = false;
+    document.getElementById('offers-table').style.display = 'none';
+    document.getElementById('decision-cell').innerHTML = '';
+    document.getElementById('offer-row').classList.remove('selected-row');
+  }
+
+  function doPrint() { window.print(); }
+
+  function toggleOffersTable() {
+    var cb = document.getElementById('read-check');
+    var tbl = document.getElementById('offers-table');
+    tbl.style.display = cb.checked ? 'block' : 'none';
+  }
+
+  function selectOffer(row) {
+    var radio = row.querySelector('input[type=radio]');
+    radio.checked = true;
+    showDecisionBtn(radio);
+    document.querySelectorAll('#offers-table tbody tr').forEach(function(r){ r.classList.remove('selected-row'); });
+    row.classList.add('selected-row');
+  }
+
+ function showDecisionBtn(radio) {
+
+  // remove old buttons
+  document.querySelectorAll('.decision-cell').forEach(function(cell) {
+    cell.innerHTML = '';
+  });
+
+  // find the row you clicked
+  var row = radio.closest('tr');
+
+  // highlight selected row
+  document.querySelectorAll('#offers-table tbody tr').forEach(function(r) {
+    r.classList.remove('selected-row');
+  });
+
+  row.classList.add('selected-row');
+
+  // put button in correct row
+  var cell = row.querySelector('.decision-cell');
+
+  cell.innerHTML =
+    '<button class="btn-accept-freeze" onclick="acceptFreeze(event)">Accept and Freeze</button>';
+}
+
+  function acceptFreeze(e) {
+  e.stopPropagation();
+
+  alert('Your selection "Accept and Freeze" has been recorded.');
+
+  doLogout();
+}
+  function showSubmitButton() {
+
+  // remove green buttons from other rows
+  document.querySelectorAll('.decision-cell').forEach(function(cell) {
+    cell.innerHTML = '';
+  });
+
+  // remove row highlights
+  document.querySelectorAll('#offers-table tbody tr').forEach(function(r) {
+    r.classList.remove('selected-row');
+  });
+
+  // show submit button
+  document.getElementById('submit-area').innerHTML =
+    '<button class="btn-accept-freeze" onclick="submitRejectWait()">Submit</button>';
+}
+
+function submitRejectWait() {
+
+  alert("Your decision 'Reject and Wait' has been recorded.");
+
+  doLogout();
+}
+</script>
+</body>
+</html>
