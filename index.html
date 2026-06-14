@@ -478,6 +478,12 @@
 
   function acceptFreeze(e) {
   e.stopPropagation();
+   var row = document.querySelector('.selected-row');
+
+if(row){
+  row.querySelector('.decision-cell').innerHTML =
+    '<span style="color:green;font-weight:bold;">Accept and Freeze Selected</span>';
+}
 
   document.getElementById('submit-area').innerHTML =
     '<button class="btn-accept-freeze" onclick="finalSubmitAccept()">Submit</button>';
@@ -491,6 +497,12 @@
 }
 function retainWait(e) {
   e.stopPropagation();
+ var row = document.querySelector('.selected-row');
+
+if(row){
+  row.querySelector('.decision-cell').innerHTML =
+    '<span style="color:#d68910;font-weight:bold;">Retain and Wait Selected</span>';
+}
 
   document.getElementById('submit-area').innerHTML =
     '<button class="btn-retain-wait" onclick="finalSubmitRetain()">Submit</button>';
