@@ -477,16 +477,28 @@
   function acceptFreeze(e) {
   e.stopPropagation();
 
+  document.getElementById('submit-area').innerHTML =
+    '<button class="btn-accept-freeze" onclick="finalSubmitAccept()">Submit</button>';
+}
+ function finalSubmitAccept() {
+
   alert('Your selection "Accept and Freeze" has been recorded.');
 
   doLogout();
+
 }
- function retainWait(e) {
+function retainWait(e) {
   e.stopPropagation();
+
+  document.getElementById('submit-area').innerHTML =
+    '<button class="btn-retain-wait" onclick="finalSubmitRetain()">Submit</button>';
+}
+ function finalSubmitRetain() {
 
   alert('Your selection "Retain and Wait" has been recorded.');
 
   doLogout();
+
 }
   function showSubmitButton() {
 
