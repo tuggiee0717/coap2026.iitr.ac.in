@@ -107,6 +107,20 @@
   .offers-table-section tr.selected-row td { background: #ddeeff; }
 
   .btn-accept-freeze { background: #2e8b57; color: #fff; border: none; padding: 5px 12px; font-size: 12px; cursor: pointer; border-radius: 2px; }
+ .btn-retain-wait {
+  background: #f39c12;
+  color: #fff;
+  border: none;
+  padding: 5px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 2px;
+  margin-left: 8px;
+}
+
+.btn-retain-wait:hover {
+  background: #d68910;
+}
   .btn-accept-freeze:hover { background: #1f6b3e; }
   .no-offer-row td { font-size: 13px; color: #555; }
   input[type=radio] { cursor: pointer; }
@@ -464,6 +478,13 @@
   e.stopPropagation();
 
   alert('Your selection "Accept and Freeze" has been recorded.');
+
+  doLogout();
+}
+ function retainWait(e) {
+  e.stopPropagation();
+
+  alert('Your selection "Retain and Wait" has been recorded.');
 
   doLogout();
 }
