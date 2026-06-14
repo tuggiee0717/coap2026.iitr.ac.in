@@ -151,7 +151,7 @@
     </a>
   </div>
 
-  <div class="live-banner">Round 2 offer is released. Decision making is live in the candidates portal.</div>
+  <div class="live-banner">Round 6 offer is released. Decision making is live in the candidates portal.</div>
 
   <div class="content">
     <div class="updates-box">
@@ -258,7 +258,7 @@
   </div>
 
   <div class="dash-content">
-    <div class="round-banner">Round 2: The deadline for acceptance of an offer is 12 Jun 2026 - 09:00:00 hrs</div>
+    <div class="round-banner">Round 6: The deadline for acceptance of an offer is 30 Jun 2026 - 09:00:00 hrs</div>
     <div class="intro-box" style="font-size:13px; margin-bottom:30px; margin-top:30px; margin-left:100px; margin-right:100px; line-height: 1.8;">
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <div><span style="font-weight:bold;">COAP Registration No:</span> COAP26010063</div>
@@ -447,8 +447,17 @@
   // put button in correct row
   var cell = row.querySelector('.decision-cell');
 
-  cell.innerHTML =
-    '<button class="btn-accept-freeze" onclick="acceptFreeze(event)">Accept and Freeze</button>';
+  cell.innerHTML = `
+  <button class="btn-accept-freeze"
+          onclick="acceptFreeze(event)">
+    Accept and Freeze
+  </button>
+
+  <button class="btn-retain-wait"
+          onclick="retainWait(event)">
+    Retain and Wait
+  </button>
+`;
 }
 
   function acceptFreeze(e) {
